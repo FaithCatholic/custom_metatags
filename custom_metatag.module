@@ -1,0 +1,59 @@
+<?php
+
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements template_preprocess_html().
+ */
+function custom_metatag_preprocess_html(&$variables) {
+  if (!_custom_metatag_is_current_route_supported()) {
+    return;
+  }
+
+  $image_src = _array_recur_search('image_src', $variables['page']['#attached']['html_head']);
+  $image_default = _array_recur_search('image_default', $variables['page']['#attached']['html_head']);
+
+  if (!$image_src && $image_default) {
+    $variables['page']['#attached']['html_head'][$image_default][0]['#attributes']['rel'] = 'image_src';
+  }
+  elseif ($image_default) {
+    unset($variables['page']['#attached']['html_head'][$image_default]);
+  }
+}
+
+function _array_recur_search($needle, $haystack) {
+  $occurences = 0;
+  foreach ($haystack as $key => $value) {
+    $current_key = $key;
+    if ($needle === $value || (is_array($value) && _array_recur_search($needle, $value) !== false)) {
+      return $current_key;
+    }
+  }
+  return false;
+}
+
+/**
+ * Identify whether the current route is supported by the module.
+ *
+ * @return bool
+ *   TRUE if the current route is supported.
+ */
+function _custom_metatag_is_current_route_supported() {
+  // If upgrading, we need to wait for database updates to complete.
+  $is_ready = \Drupal::service('entity_type.manager')->getDefinition('metatag_defaults', FALSE);
+  if (!$is_ready) {
+    return FALSE;
+  }
+
+  // Ignore admin paths.
+  if (\Drupal::service('router.admin_context')->isAdminRoute()) {
+    return FALSE;
+  }
+
+  return TRUE;
+}

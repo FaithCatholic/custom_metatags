@@ -1,0 +1,3 @@
+custom_metatag.metatag_tag.og_image_default:
+  type: label
+  label: 'Open Graph: Default Image'

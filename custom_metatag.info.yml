@@ -1,0 +1,7 @@
+name: Custom metatag
+type: module
+description: Custom extensions for contrib metatag module.
+core: 8.x
+package: Custom
+dependencies:
+  - metatag:metatag

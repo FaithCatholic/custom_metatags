@@ -15,11 +15,11 @@ function custom_metatag_preprocess_html(&$variables) {
     return;
   }
 
-  $image_src = _array_recur_search('image_src', $variables['page']['#attached']['html_head']);
-  $image_default = _array_recur_search('image_default', $variables['page']['#attached']['html_head']);
+  $image_src = _array_recur_search('og:image', $variables['page']['#attached']['html_head']);
+  $image_default = _array_recur_search('og:image:default', $variables['page']['#attached']['html_head']);
 
   if (!$image_src && $image_default) {
-    $variables['page']['#attached']['html_head'][$image_default][0]['#attributes']['rel'] = 'image_src';
+    $variables['page']['#attached']['html_head'][$image_default][0]['#attributes']['property'] = 'og:image';
   }
   elseif ($image_default) {
     unset($variables['page']['#attached']['html_head'][$image_default]);

@@ -5,3 +5,4 @@ core: 8.x
 package: Custom
 dependencies:
   - metatag:metatag
+  - metatag_open_graph:metatag_open_graph

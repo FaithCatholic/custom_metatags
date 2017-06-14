@@ -1,3 +1,9 @@
 { 
-"name": "faithcatholic/custom_metatags"
+"name": "faithcatholic/custom_metatags",
+ "type": "drupal-module",
+ "description": "Allows users to tweak metatags.",
+ "keywords": ["Drupal"],
+ "license": "GPL-2.0+",
+ "minimum-stability": "dev",
+ "require": { } 
 }

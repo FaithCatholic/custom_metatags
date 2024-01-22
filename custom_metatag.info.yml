@@ -1,8 +1,7 @@
 name: Custom metatag
 type: module
 description: Custom extensions for contrib metatag module.
-core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^8 || ^9 || ^10
 package: Custom
 dependencies:
   - metatag:metatag
